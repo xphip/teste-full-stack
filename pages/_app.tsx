@@ -1,17 +1,30 @@
 import "@/styles/globals.css";
-import type { AppProps } from "next/app";
 import Head from "next/head";
 import Layout from "@/theme/layout";
+import { Toaster } from "@/components/ui/toaster";
+import { ReactElement } from "react";
+import { AppPropsWithLayout } from "@/lib/withNoLayout";
 
-export default function App({ Component, pageProps }: AppProps) {
+
+function DefaultLayout(page: ReactElement) {
+	return (
+		<Layout>
+			{page}
+		</Layout>
+	);
+}
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
+	const getLayout =
+		Component.getLayout ?? DefaultLayout;
+
 	return (
 		<>
 			<Head>
 				<title>Tasko - Task Manager</title>
 			</Head>
-			<Layout>
-				<Component {...pageProps} />
-			</Layout>
+			{getLayout(<Component {...pageProps} />)}
+			<Toaster />
 		</>
 	);
 }

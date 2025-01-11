@@ -7,7 +7,7 @@ export default function Body({ children }: { children: ReactNode }) {
 		<div className={"bg-black"}>
 			<div className={"min-h-dvh"}>
 				<Header />
-				<div className={"p-8"}>
+				<div className={"w-[900px] mx-auto py-8"}>
 					{children}
 				</div>
 			</div>
