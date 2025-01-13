@@ -4,9 +4,9 @@ import {tokensSchema} from "../../db/schemas/user_tokens";
 
 export async function AddToken(userID: number, token: string) {
     await db
-        .update(tokensSchema)
-        .set({userId: userID, token: token})
-        .execute();
+        .insert(tokensSchema)
+        .values({userId: userID, token: token})
+        .returning();
 }
 
 export async function DeleteToken(userID: number, token: string) {
