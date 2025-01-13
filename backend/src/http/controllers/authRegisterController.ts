@@ -36,7 +36,7 @@ export async function RegisterAuthController(req: Request, res: Response) {
     const token: string = JwtSign(payload)
 
     if (token === "") {
-        res.status(500).json({"error": true, "mensagem": "Internal error"});
+        res.status(500).json({"error": true, "mensagem": "Internal error"}).end();
         return;
     }
 
@@ -46,6 +46,6 @@ export async function RegisterAuthController(req: Request, res: Response) {
         expires: dayjs().add(1, "days").toDate(),
     });
 
-    res.json({"error": false, type: "Bearer", "token": token});
+    res.json({"error": false, type: "Bearer", "token": token}).end();
 
 }

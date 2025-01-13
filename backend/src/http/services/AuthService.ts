@@ -50,7 +50,6 @@ export function CheckValidSession(req: RequestCustom, callback:  jwtService.Veri
     jwtService.verify(jwt, privateKey, callback);
 }
 
-
 export function JwtSign(payload: any) {
     const options: SignOptions = {expiresIn: "1d"};
     const token: string = jwt.sign(payload, APP_SECRET, options);

@@ -6,7 +6,7 @@ import {CheckValidSession} from "../services/AuthService";
 export function ValidateAuth(req: RequestCustom, res: Response, next: NextFunction) {
     CheckValidSession(req, (err: VerifyErrors | null, session: SessionTypeProp) => {
         if (err) {
-            res.status(403).json({ "error": true, "msg": "Unauthorized" });
+            res.status(403).json({ "error": true, "msg": "Unauthorized" }).end();
             return;
         }
         req.session = session as SessionType;

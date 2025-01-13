@@ -20,7 +20,7 @@ export async function LoginAuthController(req: Request, res: Response) {
         const token: string = JwtSign(payload);
 
         if (token === "") {
-            res.status(500).json({ "error": true, "mensagem": "Internal error" });
+            res.status(500).json({ "error": true, "mensagem": "Internal error" }).end();
             return;
         }
 
@@ -32,9 +32,9 @@ export async function LoginAuthController(req: Request, res: Response) {
             expires: dayjs().add(1, "days").toDate(),
         });
 
-        res.json({ "error": false, type: "Bearer", "token": token });
+        res.json({ "error": false, type: "Bearer", "token": token }).end();
     } else {
-        res.status(401).json({ "error": false, "msg": "Unauthorized" });
+        res.status(401).json({ "error": false, "msg": "Unauthorized" }).end();
     }
 }
 
