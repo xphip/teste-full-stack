@@ -6,9 +6,9 @@ import {
     ListUsersModel,
     UpdateUsersModel
 } from "../../db/models/usersModel";
-import { v4 as uuid } from "uuid";
 import { UsersInsert } from "../../db/schemas/users";
 import {RequestCustom} from "../types";
+import {GetUUID} from "../utils";
 
 
 export async function ListUsersController(req: Request, res: Response) {
@@ -23,7 +23,7 @@ export async function GetUsersController(req: Request, res: Response) {
 
 export async function CreateUsersController(req: Request, res: Response) {
     const user: UsersInsert = {
-        id: uuid(),
+        id: GetUUID(),
         username: req.body.username,
         email: req.body.username,
         password: req.body.password,

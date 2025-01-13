@@ -1,10 +1,10 @@
 import {Request, Response} from "express";
-import {APP_ENV} from "../../config";
 import dayjs from "dayjs";
 import {GetUUID, HashPassword, IsProd} from "../utils";
 import {UsersInsert} from "../../db/schemas/users";
 import {CreateUsersModel} from "../../db/models/usersModel";
 import {CheckRegister, JwtSign} from "../services/AuthService";
+import {AddToken} from "../services/UpdateToken";
 
 
 export async function RegisterAuthController(req: Request, res: Response) {
