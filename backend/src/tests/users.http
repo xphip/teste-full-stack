@@ -1,0 +1,13 @@
+# @name List users
+GET {{host}}/users/
+Content-Type: application/json
+Authorization: {{authToken}}
+
+###
+
+# @name Get users
+GET {{host}}/users/8e0ea6bc-ec91-4029-bbf1-46a4a2246041
+Content-Type: application/json
+Authorization: {{authToken}}
+
+###

@@ -1,0 +1,9 @@
+services:
+  db:
+    image: "postgres:17"
+    environment:
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+    volumes:
+      - "./.temp/postgresql/data:/var/lib/postgresql/data"
+    ports:
+      - "5432:5432"

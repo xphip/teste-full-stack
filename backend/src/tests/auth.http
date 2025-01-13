@@ -1,0 +1,21 @@
+# @name Register
+POST {{host}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "admin@example.com",
+  "password": "123456"
+}
+
+###
+
+# @name Do login
+POST {{host}}/auth/login
+Content-Type: application/json
+Authorization: {{authToken}}
+
+{
+  "username": "admin@example.com",
+  "password": "123456"
+}
+###
