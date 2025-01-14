@@ -1,13 +1,17 @@
 import { UsersInsert, usersSchema, UsersSelect } from "../schemas/users";
 import db from "../index";
-import { eq, sql } from "drizzle-orm";
+import {eq, getTableColumns, sql} from "drizzle-orm";
 
 type UsersModel = UsersSelect;
 
-export async function ListUsersModel(): Promise<UsersModel[]> {
+const {_id, password, deleted_at, ...fields} = getTableColumns(usersSchema);
+
+export async function ListUsersModel(offset: number = 0) {
     return await db
-        .select()
+        .select(fields)
         .from(usersSchema)
+        .offset(offset)
+        .limit(10)
         .execute();
 }
 
