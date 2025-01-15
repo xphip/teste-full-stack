@@ -1,6 +1,6 @@
-import { UsersInsert, usersSchema, UsersSelect } from "../schemas/users";
+import {UsersInsert, usersSchema, UsersSelect} from "../schemas/users";
 import db from "../index";
-import {eq, getTableColumns, sql} from "drizzle-orm";
+import {and, eq, getTableColumns, isNull, sql} from "drizzle-orm";
 
 type UsersModel = UsersSelect;
 
@@ -12,6 +12,7 @@ export async function ListUsersModel(offset: number = 0) {
         .from(usersSchema)
         .offset(offset)
         .limit(10)
+        .where(isNull(usersSchema.deleted_at))
         .execute();
 }
 
@@ -19,7 +20,10 @@ export async function GetUsersModel(id: string): Promise<UsersModel[]> {
     return await db
         .select()
         .from(usersSchema)
-        .where(eq(usersSchema.id, id))
+        .where(and(
+            eq(usersSchema.id, id),
+            isNull(usersSchema.deleted_at),
+        ))
         .execute();
 }
 
@@ -34,14 +38,22 @@ export async function UpdateUsersModel(user: UsersInsert) {
     return await db
         .update(usersSchema)
         .set(user)
-        .where(eq(usersSchema.id, user.id))
+        .where(and(
+            eq(usersSchema.id, user.id),
+            isNull(usersSchema.deleted_at)
+        ))
         .execute();
 }
 
 export async function DeleteUsersModel(id: string) {
     return await db
         .update(usersSchema)
-        .set({deleted_at: sql`NOW()`})
-        .where(eq(usersSchema.id, id))
+        .set({
+            deleted_at: sql`NOW()`
+        })
+        .where(and(
+            eq(usersSchema.id, id),
+            isNull(usersSchema.deleted_at),
+        ))
         .execute();
 }
