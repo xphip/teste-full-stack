@@ -12,7 +12,7 @@ export function ListUsers(offset: number = 0) {
         .execute();
 }
 
-export function GetUsers(id: string) {
+export function GetUser(id: string) {
     return db
         .select()
         .from(usersSchema)
@@ -34,14 +34,14 @@ export function GetUsersByEmail(email: string) {
         .execute();
 }
 
-export function CreateUsers(user: UsersInsert) {
+export function CreateUser(user: UsersInsert) {
     return db
         .insert(usersSchema)
         .values(user)
         .execute();
 }
 
-export function UpdateUsers(user: UsersInsert) {
+export function UpdateUser(user: UsersInsert) {
     return db
         .update(usersSchema)
         .set(user)

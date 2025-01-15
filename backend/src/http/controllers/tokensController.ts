@@ -2,9 +2,16 @@ import {Request, Response} from "express";
 import {RefreshToken} from "../services/TokensService";
 import {IsProd, ParseToken} from "../utils";
 import dayjs from "dayjs";
+import {CreateToken, ListTokens} from "../../db/models/tokensModel";
+import {TokensInsert} from "../../db/schemas/tokens";
+import {v4 as uuid} from "uuid";
+import {RequestCustom, SessionType} from "../types";
 
 export async function GetTokensController(req: Request, res: Response) {
-    res.json({"error": false, "msg": "Token obtido com sucesso"}).end();
+    const offset: number | null = req?.query?.offset ? parseInt(<string>req?.query?.offset) : 0;
+    const tokens = await ListTokens(offset)
+
+    res.json({"error": false, "msg": "", data: tokens}).end();
 }
 
 export async function RefreshTokensController(req: Request, res: Response) {
@@ -22,11 +29,7 @@ export async function RefreshTokensController(req: Request, res: Response) {
         expires: dayjs().add(1, "days").toDate(),
     });
 
-    res.json({"error": false, type: "Bearer", "token": newToken}).end();
-}
-
-export async function CreateTokensController(req: Request, res: Response) {
-    res.json({"error": false, "msg": "Token criado com sucesso"}).end();
+    res.json({"error": false, "msg": "Token criado com sucesso", "type": "Bearer", "token": newToken}).end();
 }
 
 export async function DeleteTokensController(req: Request, res: Response) {

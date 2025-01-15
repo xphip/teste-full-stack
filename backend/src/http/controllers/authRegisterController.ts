@@ -2,7 +2,7 @@ import {Request, Response} from "express";
 import dayjs from "dayjs";
 import {GetUUID, HashPassword, IsProd} from "../utils";
 import {UsersInsert} from "../../db/schemas/users";
-import {CreateUsers} from "../../db/models/usersModel";
+import {CreateUser} from "../../db/models/usersModel";
 import {CheckRegister, JwtSign} from "../services/AuthService";
 
 
@@ -30,7 +30,7 @@ export async function RegisterAuthController(req: Request, res: Response) {
         password: await HashPassword(password)
     };
 
-    await CreateUsers(user);
+    await CreateUser(user);
 
     const token: string = JwtSign(payload)
 

@@ -8,7 +8,6 @@ import {
 } from "../http/controllers/tasksController";
 import {
     GetTokensController,
-    CreateTokensController,
     DeleteTokensController,
     RefreshTokensController
 } from "../http/controllers/tokensController";
@@ -39,7 +38,6 @@ const rootRoutes: Router = express.Router();
     rootRoutes.get("/tokens", [ValidateAuth, ValidateOwnership], GetTokensController);
     rootRoutes.get("/tokens/refresh", [ValidateAuth], RefreshTokensController);
     rootRoutes.get("/tokens/:id", [ValidateAuth, ValidateIfIsAdmin], GetTokensController);
-    rootRoutes.post("/tokens/:id", [ValidateAuth, ValidateIfIsAdmin], CreateTokensController);
     rootRoutes.delete("/tokens/:id", [ValidateAuth, ValidateIfIsAdmin], DeleteTokensController);
 }
 
