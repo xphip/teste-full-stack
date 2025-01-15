@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import path from "path";
 
-dotenv.config({ path: path.resolve("../.env") });
+dotenv.config({path: path.resolve("../.env")});
 
 if (!process?.env) {
     throw new Error("Interal error. No environment variable is set.");
@@ -17,6 +17,7 @@ if (!process.env.APP_ENV) {
 
 export const APP_ENV: string = process.env.APP_ENV || "dev";
 export const APP_SECRET: string = process.env.APP_SECRET || "";
+export const APP_SECRET_SALT: number = parseInt(process.env.APP_SECRET_SALT || "10");
 
 export const SERVER_URL: string = process.env.SERVER_URL || "http://localhost";
 export const SERVER_PORT: string = process.env.SERVER_PORT || "8080";

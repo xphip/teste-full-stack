@@ -6,7 +6,12 @@ import {
 import {
     ListTasksController, GetTasksController, CreateTasksController, UpdateTasksController, DeleteTasksController,
 } from "../http/controllers/tasksController";
-import { GetTokensController, CreateTokensController, DeleteTokensController } from "../http/controllers/tokensController";
+import {
+    GetTokensController,
+    CreateTokensController,
+    DeleteTokensController,
+    RefreshTokensController
+} from "../http/controllers/tokensController";
 import { IndexController } from "../http/controllers/indexController";
 import { LoginAuthController } from "../http/controllers/authLoginController";
 import { RegisterAuthController } from "../http/controllers/authRegisterController";
@@ -31,6 +36,8 @@ const rootRoutes: Router = express.Router();
     rootRoutes.delete("/tasks/:id", [ValidateAuth, ValidateOwnership], DeleteTasksController);
 }
 {
+    rootRoutes.get("/tokens", [ValidateAuth, ValidateOwnership], GetTokensController);
+    rootRoutes.get("/tokens/refresh", [ValidateAuth], RefreshTokensController);
     rootRoutes.get("/tokens/:id", [ValidateAuth, ValidateIfIsAdmin], GetTokensController);
     rootRoutes.post("/tokens/:id", [ValidateAuth, ValidateIfIsAdmin], CreateTokensController);
     rootRoutes.delete("/tokens/:id", [ValidateAuth, ValidateIfIsAdmin], DeleteTokensController);

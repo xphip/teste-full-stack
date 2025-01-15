@@ -1,14 +1,10 @@
-import {UsersInsert, usersSchema, UsersSelect} from "../schemas/users";
+import {UsersInsert, usersSchema} from "../schemas/users";
 import db from "../index";
-import {and, eq, getTableColumns, isNull, sql} from "drizzle-orm";
+import {and, eq, isNull, sql} from "drizzle-orm";
 
-type UsersModel = UsersSelect;
-
-const {_id, password, deleted_at, ...fields} = getTableColumns(usersSchema);
-
-export async function ListUsersModel(offset: number = 0) {
-    return await db
-        .select(fields)
+export function ListUsers(offset: number = 0) {
+    return db
+        .select()
         .from(usersSchema)
         .offset(offset)
         .limit(10)
@@ -16,8 +12,8 @@ export async function ListUsersModel(offset: number = 0) {
         .execute();
 }
 
-export async function GetUsersModel(id: string): Promise<UsersModel[]> {
-    return await db
+export function GetUsers(id: string) {
+    return db
         .select()
         .from(usersSchema)
         .where(and(
@@ -27,15 +23,26 @@ export async function GetUsersModel(id: string): Promise<UsersModel[]> {
         .execute();
 }
 
-export async function CreateUsersModel(user: UsersInsert) {
-    return await db
+export function GetUsersByEmail(email: string) {
+    return db
+        .select()
+        .from(usersSchema)
+        .where(and(
+            eq(usersSchema.email, email),
+            isNull(usersSchema.deleted_at),
+        ))
+        .execute();
+}
+
+export function CreateUsers(user: UsersInsert) {
+    return db
         .insert(usersSchema)
         .values(user)
         .execute();
 }
 
-export async function UpdateUsersModel(user: UsersInsert) {
-    return await db
+export function UpdateUsers(user: UsersInsert) {
+    return db
         .update(usersSchema)
         .set(user)
         .where(and(
@@ -45,12 +52,10 @@ export async function UpdateUsersModel(user: UsersInsert) {
         .execute();
 }
 
-export async function DeleteUsersModel(id: string) {
-    return await db
+export function DeleteUsers(id: string) {
+    return db
         .update(usersSchema)
-        .set({
-            deleted_at: sql`NOW()`
-        })
+        .set({deleted_at: sql`NOW()`})
         .where(and(
             eq(usersSchema.id, id),
             isNull(usersSchema.deleted_at),
