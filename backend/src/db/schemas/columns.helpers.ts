@@ -1,7 +1,4 @@
-import { pgSchema, timestamp } from "drizzle-orm/pg-core";
-import { DB_SCHEMA } from "../../config";
-
-export const schema = pgSchema(DB_SCHEMA);
+import { timestamp } from "drizzle-orm/pg-core";
 
 export const timestampsFields = {
   created_at: timestamp().defaultNow().notNull(),

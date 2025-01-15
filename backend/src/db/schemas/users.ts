@@ -1,6 +1,7 @@
 import * as t from "drizzle-orm/pg-core";
-import { schema, timestampsFields } from "./columns.helpers";
+import { timestampsFields } from "./columns.helpers";
 import { pgEnum } from "drizzle-orm/pg-core";
+import {schema} from "./schema";
 
 export const rolesEnum = pgEnum("role", ["user", "admin"]);
 

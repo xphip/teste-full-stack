@@ -1,6 +1,7 @@
 import * as t from "drizzle-orm/pg-core";
-import { schema, timestampsFields } from "./columns.helpers";
+import { timestampsFields } from "./columns.helpers";
 import { usersSchema } from "./users";
+import {schema} from "./schema";
 
 export const tokensSchema = schema.table("tokens", {
     id: t.integer().primaryKey().generatedAlwaysAsIdentity(),
